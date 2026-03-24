@@ -408,9 +408,157 @@ body {
 </div>
 
 <div class="footer">
-  <p>Last updated: 2026-03-25 | Managed by Claude Code + Telegram</p>
+  <p>Last updated: <span id="last-update">loading...</span> | Managed by Claude Code + Telegram</p>
   <p style="margin-top:4px;">jyw-sata | GitHub | NAS: satanastwo</p>
+  <p style="margin-top:4px;font-size:11px;">GitHub 데이터 자동 갱신 (페이지 열 때마다)</p>
 </div>
+
+<script>
+// GitHub API 자동 조회 — 페이지 열 때마다 최신 정보 가져오기
+const REPOS = [
+  { name: 'ai-shortform-creator', cardId: 'card-shortform' },
+  { name: 'batch-system', cardId: 'card-batch' },
+  { name: 'shinlion-runner', cardId: 'card-shinlion' },
+  { name: 'space-sheep-defense', cardId: 'card-tower' },
+  { name: 'KIS_Trader_Platform', cardId: 'card-kis' },
+];
+const OWNER = 'jyw-sata';
+const API = 'https://api.github.com';
+
+// 카드에 ID 부여 (순서대로)
+document.querySelectorAll('.card').forEach((card, i) => {
+  if (REPOS[i]) card.id = REPOS[i].cardId;
+});
+
+async function fetchRepoData() {
+  let latestPush = '';
+
+  for (const repo of REPOS) {
+    try {
+      const res = await fetch(`${API}/repos/${OWNER}/${repo.name}`);
+      if (!res.ok) continue;
+      const data = await res.json();
+
+      const card = document.getElementById(repo.cardId);
+      if (!card) continue;
+
+      // 최근 업데이트 시간 표시
+      const pushed = new Date(data.pushed_at);
+      const timeStr = formatTime(pushed);
+
+      // 카드에 업데이트 시간 추가/갱신
+      let updateEl = card.querySelector('.auto-update');
+      if (!updateEl) {
+        updateEl = document.createElement('div');
+        updateEl.className = 'auto-update';
+        updateEl.style.cssText = 'font-size:11px;color:#94a3b8;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.05);';
+        card.appendChild(updateEl);
+      }
+      updateEl.innerHTML = `🔄 최근 업데이트: ${timeStr} | ⭐ ${data.stargazers_count} | 📦 ${formatSize(data.size)}`;
+
+      if (!latestPush || pushed > new Date(latestPush)) latestPush = data.pushed_at;
+
+      // 게임은 Pages 접속 확인
+      if (data.homepage) {
+        checkUrl(data.homepage, card);
+      }
+
+    } catch (e) {
+      console.log(`${repo.name} fetch failed:`, e.message);
+    }
+  }
+
+  // 전체 최종 업데이트
+  document.getElementById('last-update').textContent = latestPush ? formatTime(new Date(latestPush)) : new Date().toLocaleDateString('ko-KR');
+
+  // 최근 커밋 타임라인 업데이트
+  await fetchRecentCommits();
+}
+
+async function fetchRecentCommits() {
+  const timeline = document.querySelector('.timeline');
+  if (!timeline) return;
+
+  const events = [];
+  for (const repo of REPOS) {
+    try {
+      const res = await fetch(`${API}/repos/${OWNER}/${repo.name}/commits?per_page=3`);
+      if (!res.ok) continue;
+      const commits = await res.json();
+      for (const c of commits) {
+        events.push({
+          date: new Date(c.commit.author.date),
+          repo: repo.name,
+          msg: c.commit.message.split('\n')[0].substring(0, 60),
+        });
+      }
+    } catch (e) {}
+  }
+
+  // 최신순 정렬, 상위 8개
+  events.sort((a, b) => b.date - a.date);
+  const top = events.slice(0, 8);
+
+  if (top.length > 0) {
+    // 자동 타임라인 추가
+    let autoTimeline = document.getElementById('auto-timeline');
+    if (!autoTimeline) {
+      const title = document.createElement('div');
+      title.className = 'section-title';
+      title.textContent = '🔄 최근 GitHub 커밋 (자동)';
+      timeline.parentNode.insertBefore(title, timeline.nextSibling);
+
+      autoTimeline = document.createElement('div');
+      autoTimeline.id = 'auto-timeline';
+      autoTimeline.className = 'timeline';
+      title.parentNode.insertBefore(autoTimeline, title.nextSibling);
+    }
+
+    autoTimeline.innerHTML = top.map(e => `
+      <div class="timeline-item">
+        <div class="timeline-date">${(e.date.getMonth()+1).toString().padStart(2,'0')}-${e.date.getDate().toString().padStart(2,'0')}</div>
+        <div class="timeline-text"><span style="color:var(--accent)">[${e.repo}]</span> ${e.msg}</div>
+      </div>
+    `).join('');
+  }
+}
+
+async function checkUrl(url, card) {
+  try {
+    const res = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
+    // no-cors이면 항상 opaque response, 실패 시 catch
+    let indicator = card.querySelector('.live-indicator');
+    if (!indicator) {
+      indicator = document.createElement('span');
+      indicator.className = 'live-indicator';
+      indicator.style.cssText = 'font-size:11px;color:var(--green);margin-left:8px;';
+      const header = card.querySelector('.card-header');
+      if (header) header.appendChild(indicator);
+    }
+    indicator.textContent = '🟢 LIVE';
+  } catch (e) {
+    // 접속 불가
+  }
+}
+
+function formatTime(date) {
+  const now = new Date();
+  const diff = now - date;
+  if (diff < 60000) return '방금 전';
+  if (diff < 3600000) return `${Math.floor(diff/60000)}분 전`;
+  if (diff < 86400000) return `${Math.floor(diff/3600000)}시간 전`;
+  if (diff < 604800000) return `${Math.floor(diff/86400000)}일 전`;
+  return `${date.getMonth()+1}/${date.getDate()}`;
+}
+
+function formatSize(kb) {
+  if (kb < 1024) return `${kb}KB`;
+  return `${(kb/1024).toFixed(1)}MB`;
+}
+
+// 페이지 로드 시 실행
+fetchRepoData();
+</script>
 
 </body>
 </html>
