@@ -341,34 +341,87 @@ body {
 
   </div>
 
-  <!-- 인프라 현황 제거됨 (보안상 비공개 정보) -->
+  <!-- 프로젝트별 진행 상세 -->
+  <div class="section-title">📝 프로젝트별 진행 상세</div>
+
+  <div class="grid">
+    <!-- 숏폼 상세 -->
+    <div class="card" style="border-left:3px solid var(--pink)">
+      <div style="font-size:16px;font-weight:700;margin-bottom:12px;">🎬 숏폼 프로젝트 진행 내역</div>
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-date">03-25</div><div class="timeline-text">무료 업그레이드: 이미지 검색(Unsplash/Pexels), BGM(5분위기), 크로스페이드 전환</div></div>
+        <div class="timeline-item"><div class="timeline-date">03-24</div><div class="timeline-text">7단계 전체 개발 완료 (FastAPI+Celery+FFmpeg+Web UI)</div></div>
+        <div class="timeline-item"><div class="timeline-date">03-24</div><div class="timeline-text">코드 리뷰: Critical 6개 버그 수정</div></div>
+        <div class="timeline-item"><div class="timeline-date">03-24</div><div class="timeline-text">NAS DB 초기화 (shortform DB + 테이블 3개)</div></div>
+        <div class="timeline-item"><div class="timeline-date">03-24</div><div class="timeline-text">문서 8개 작성 (PRD, GUIDE, WORKFLOW, INTEGRATION 등)</div></div>
+      </div>
+      <div style="margin-top:12px;padding:10px;background:rgba(244,114,182,0.08);border-radius:8px;font-size:12px;">
+        <strong>다음 단계:</strong> Python+FFmpeg 설치 → 서버 실행 → 첫 숏폼 생성 테스트
+      </div>
+    </div>
+
+    <!-- 배치 상세 -->
+    <div class="card" style="border-left:3px solid var(--accent)">
+      <div style="font-size:16px;font-weight:700;margin-bottom:12px;">⚙️ 배치시스템 진행 내역</div>
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-date">03-25</div><div class="timeline-text">날씨/뉴스 수집 배치 Job 2개 개발 (API 키 불필요)</div></div>
+        <div class="timeline-item"><div class="timeline-date">03-25</div><div class="timeline-text">중계(Relay) 모드 테스트 성공 (APP 8080 + Relay 8090)</div></div>
+        <div class="timeline-item"><div class="timeline-date">03-25</div><div class="timeline-text">H2 의존성 추가, Flyway 마이그레이션 이슈 해결</div></div>
+        <div class="timeline-item"><div class="timeline-date">03-25</div><div class="timeline-text">Maven 3.9.9 설치 + 빌드 성공 (v1.8.3)</div></div>
+        <div class="timeline-item"><div class="timeline-date">03-25</div><div class="timeline-text">GitHub clone + 프로젝트 분석 완료</div></div>
+      </div>
+      <div style="margin-top:12px;padding:10px;background:rgba(56,189,248,0.08);border-radius:8px;font-size:12px;">
+        <strong>다음 단계:</strong> 날씨/뉴스 Job 빌드 테스트 → 스케줄 실행 확인 → 60분 단위 전환
+      </div>
+    </div>
+
+    <!-- 게임 상세 -->
+    <div class="card" style="border-left:3px solid var(--yellow)">
+      <div style="font-size:16px;font-weight:700;margin-bottom:12px;">🎮 게임 프로젝트 진행 내역</div>
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-date">03-24</div><div class="timeline-text">🦁 신라이언: Phaser 리빌드, 실제 스프라이트(Polar/Teddy Bear), 사운드 7종</div></div>
+        <div class="timeline-item"><div class="timeline-date">03-24</div><div class="timeline-text">🦁 신라이언: 횡스크롤 5레인, 점프, 부스터, 난이도 시스템, 모바일 버튼</div></div>
+        <div class="timeline-item"><div class="timeline-date">03-24</div><div class="timeline-text">🦁 신라이언: 인다락 벚꽃길 배경, 게임 설명 패널</div></div>
+        <div class="timeline-item"><div class="timeline-date">03-23</div><div class="timeline-text">🏰 타워디펜스: Tower Madness 스타일, 잔디밭 테마 리워크</div></div>
+        <div class="timeline-item"><div class="timeline-date">03-23</div><div class="timeline-text">🏰 타워디펜스: 타워 5종, 적 5종, 20웨이브, 한글 UI</div></div>
+      </div>
+      <div style="margin-top:12px;padding:10px;background:rgba(251,191,36,0.08);border-radius:8px;font-size:12px;">
+        <strong>다음 단계:</strong> 신라이언 커스텀 캐릭터 제작, 스테이지 추가, 랭킹 시스템
+      </div>
+    </div>
+
+    <!-- KIS 상세 -->
+    <div class="card" style="border-left:3px solid var(--purple)">
+      <div style="font-size:16px;font-weight:700;margin-bottom:12px;">📈 KIS Trader 진행 내역</div>
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-date">03-22</div><div class="timeline-text">NAS Docker 24개 컨테이너 정상 가동 확인</div></div>
+        <div class="timeline-item"><div class="timeline-date">03-22</div><div class="timeline-text">SSH 키 등록, Tailscale 외부 접속 설정</div></div>
+        <div class="timeline-item"><div class="timeline-date">03-22</div><div class="timeline-text">Phase 5 개발 완료 (DB 8테이블, UI 4페이지, 텔레그램 봇)</div></div>
+      </div>
+      <div style="margin-top:12px;padding:10px;background:rgba(167,139,250,0.08);border-radius:8px;font-size:12px;">
+        <strong>다음 단계:</strong> 워커 재시작 오류 수정, DB 마이그레이션, KIS API 키 입력
+      </div>
+    </div>
+  </div>
 
   <!-- 최근 활동 -->
-  <div class="section-title">📅 최근 활동</div>
+  <div class="section-title">📅 최근 활동 요약</div>
   <div class="timeline">
     <div class="timeline-item">
       <div class="timeline-date">03-25</div>
-      <div class="timeline-text">⚙️ 배치시스템 중계 모드 테스트 성공 + 날씨/뉴스 Job 개발</div>
-    </div>
-    <div class="timeline-item">
-      <div class="timeline-date">03-25</div>
-      <div class="timeline-text">🎬 숏폼 무료 업그레이드 (이미지 검색, BGM, 크로스페이드)</div>
+      <div class="timeline-text">⚙️ 배치: 중계 모드 테스트 성공 + 날씨/뉴스 Job 개발 | 🎬 숏폼: 무료 업그레이드 3개</div>
     </div>
     <div class="timeline-item">
       <div class="timeline-date">03-24</div>
-      <div class="timeline-text">🦁 신라이언 러닝 게임 Phaser 리빌드 + 사운드 추가</div>
-    </div>
-    <div class="timeline-item">
-      <div class="timeline-date">03-24</div>
-      <div class="timeline-text">🎬 숏폼 7단계 전체 개발 완료 + 코드 리뷰</div>
+      <div class="timeline-text">🎬 숏폼 7단계 완성 | 🦁 신라이언 Phaser 리빌드 + 사운드 | 📋 통합 대시보드 생성</div>
     </div>
     <div class="timeline-item">
       <div class="timeline-date">03-23</div>
-      <div class="timeline-text">🏰 Space Sheep Defense 게임 개발 + 배포</div>
+      <div class="timeline-text">🏰 타워디펜스 개발+배포 | 🎬 숏폼 기획 시작 | 💻 PC 전원 스케줄 설정</div>
     </div>
     <div class="timeline-item">
       <div class="timeline-date">03-22</div>
-      <div class="timeline-text">🖥️ PC 환경 설정 (Node.js, JDK, Git, SSH)</div>
+      <div class="timeline-text">🖥️ PC 환경 설정 (Node.js, JDK, Git) | 📈 NAS/GitHub 접근 설정</div>
     </div>
   </div>
 
