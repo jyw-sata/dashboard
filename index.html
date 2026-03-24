@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>프로젝트 대시보드</title>
+<style>
+:root {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --card-hover: #334155;
+  --accent: #38bdf8;
+  --green: #4ade80;
+  --yellow: #fbbf24;
+  --red: #f87171;
+  --purple: #a78bfa;
+  --pink: #f472b6;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --border: #334155;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Segoe UI', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+.header {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 24px 32px;
+  text-align: center;
+}
+.header h1 { font-size: 28px; margin-bottom: 8px; }
+.header h1 span { color: var(--accent); }
+.header p { color: var(--muted); font-size: 14px; }
+.container { max-width: 1200px; margin: 0 auto; padding: 24px 16px; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+.card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  transition: transform 0.2s, border-color 0.2s;
+}
+.card:hover { transform: translateY(-2px); border-color: var(--accent); }
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.card-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+}
+.card-title { font-size: 18px; font-weight: 700; }
+.card-subtitle { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.badge-green { background: rgba(74,222,128,0.15); color: var(--green); }
+.badge-yellow { background: rgba(251,191,36,0.15); color: var(--yellow); }
+.badge-red { background: rgba(248,113,113,0.15); color: var(--red); }
+.badge-blue { background: rgba(56,189,248,0.15); color: var(--accent); }
+.badge-purple { background: rgba(167,139,250,0.15); color: var(--purple); }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 16px 0;
+}
+.stat {
+  background: rgba(255,255,255,0.03);
+  border-radius: 8px;
+  padding: 12px;
+}
+.stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-value { font-size: 20px; font-weight: 700; margin-top: 4px; }
+.progress-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+  margin: 12px 0;
+  overflow: hidden;
+}
+.progress-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
+.tech-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.tech-tag {
+  background: rgba(255,255,255,0.06);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.links { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+.link-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.link-primary { background: var(--accent); color: #0f172a; }
+.link-primary:hover { background: #7dd3fc; }
+.link-secondary { background: rgba(255,255,255,0.08); color: var(--text); }
+.link-secondary:hover { background: rgba(255,255,255,0.15); }
+.section-title {
+  font-size: 20px; font-weight: 700;
+  margin: 32px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.infra-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+.infra-item {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  text-align: center;
+}
+.infra-status { font-size: 32px; margin-bottom: 8px; }
+.infra-name { font-size: 14px; font-weight: 600; }
+.infra-detail { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.timeline { margin-top: 16px; }
+.timeline-item {
+  display: flex; gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.timeline-date { font-size: 12px; color: var(--muted); min-width: 80px; }
+.timeline-text { font-size: 13px; }
+.footer {
+  text-align: center;
+  padding: 24px;
+  color: var(--muted);
+  font-size: 12px;
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+@media (max-width: 768px) {
+  .grid { grid-template-columns: 1fr; }
+  .header { padding: 16px; }
+  .header h1 { font-size: 22px; }
+  .container { padding: 16px 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🚀 <span>프로젝트 대시보드</span></h1>
+  <p>jyw-sata | 전체 프로젝트 현황 통합 관리</p>
+</div>
+
+<div class="container">
+
+  <!-- 프로젝트 카드 -->
+  <div class="grid">
+
+    <!-- 숏폼 프로젝트 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:rgba(244,114,182,0.15)">🎬</div>
+        <div>
+          <div class="card-title">AI 숏폼 자동 제작</div>
+          <div class="card-subtitle">ai-shortform-creator</div>
+        </div>
+        <span class="badge badge-yellow">환경 세팅 중</span>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">
+        아이들 캐릭터 기반 세로형 숏폼 영상 자동 생성
+      </p>
+      <div class="stats">
+        <div class="stat"><div class="stat-label">개발 단계</div><div class="stat-value" style="color:var(--green)">7/7</div></div>
+        <div class="stat"><div class="stat-label">버전</div><div class="stat-value">v0.0.3</div></div>
+        <div class="stat"><div class="stat-label">코드 리뷰</div><div class="stat-value" style="color:var(--green)">완료</div></div>
+        <div class="stat"><div class="stat-label">문서</div><div class="stat-value">8개</div></div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:85%;background:var(--pink)"></div></div>
+      <div class="tech-tags">
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">FastAPI</span>
+        <span class="tech-tag">Celery</span>
+        <span class="tech-tag">FFmpeg</span>
+        <span class="tech-tag">edge-tts</span>
+        <span class="tech-tag">PostgreSQL</span>
+      </div>
+      <div class="links">
+        <a href="https://github.com/jyw-sata/ai-shortform-creator" class="link-btn link-primary">GitHub</a>
+      </div>
+    </div>
+
+    <!-- 배치시스템 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:rgba(56,189,248,0.15)">⚙️</div>
+        <div>
+          <div class="card-title">배치 시스템</div>
+          <div class="card-subtitle">batch-system</div>
+        </div>
+        <span class="badge badge-green">테스트 완료</span>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">
+        엔터프라이즈 배치 처리 + 중계 모드 + 외부 통신
+      </p>
+      <div class="stats">
+        <div class="stat"><div class="stat-label">버전</div><div class="stat-value">v1.8.3</div></div>
+        <div class="stat"><div class="stat-label">릴레이</div><div class="stat-value" style="color:var(--green)">UP</div></div>
+        <div class="stat"><div class="stat-label">Job 타입</div><div class="stat-value">7+</div></div>
+        <div class="stat"><div class="stat-label">테스트</div><div class="stat-value">340+</div></div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:90%;background:var(--accent)"></div></div>
+      <div class="tech-tags">
+        <span class="tech-tag">Java 21</span>
+        <span class="tech-tag">Spring Boot 3</span>
+        <span class="tech-tag">Spring Batch</span>
+        <span class="tech-tag">PostgreSQL</span>
+        <span class="tech-tag">Kafka</span>
+        <span class="tech-tag">Prometheus</span>
+      </div>
+      <div class="links">
+        <a href="https://github.com/jyw-sata/batch-system" class="link-btn link-primary">GitHub</a>
+      </div>
+    </div>
+
+    <!-- 신라이언 러닝 게임 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:rgba(251,191,36,0.15)">🦁</div>
+        <div>
+          <div class="card-title">신라이언 러닝 게임</div>
+          <div class="card-subtitle">shinlion-runner</div>
+        </div>
+        <span class="badge badge-green">배포 완료</span>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">
+        횡스크롤 러닝 액션 — 120초 생존, 점프, 부스터
+      </p>
+      <div class="stats">
+        <div class="stat"><div class="stat-label">캐릭터</div><div class="stat-value">2종</div></div>
+        <div class="stat"><div class="stat-label">플랫폼</div><div class="stat-value">웹/모바일</div></div>
+        <div class="stat"><div class="stat-label">사운드</div><div class="stat-value" style="color:var(--green)">7종</div></div>
+        <div class="stat"><div class="stat-label">에셋</div><div class="stat-value">CC0</div></div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:95%;background:var(--yellow)"></div></div>
+      <div class="tech-tags">
+        <span class="tech-tag">Phaser 3</span>
+        <span class="tech-tag">Vite</span>
+        <span class="tech-tag">Web Audio</span>
+        <span class="tech-tag">GitHub Pages</span>
+      </div>
+      <div class="links">
+        <a href="https://jyw-sata.github.io/shinlion-runner/" class="link-btn link-primary">🎮 플레이</a>
+        <a href="https://github.com/jyw-sata/shinlion-runner" class="link-btn link-secondary">GitHub</a>
+      </div>
+    </div>
+
+    <!-- 타워디펜스 게임 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:rgba(74,222,128,0.15)">🏰</div>
+        <div>
+          <div class="card-title">Space Sheep Defense</div>
+          <div class="card-subtitle">space-sheep-defense</div>
+        </div>
+        <span class="badge badge-green">배포 완료</span>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">
+        Tower Madness 스타일 타워디펜스 — 양 지키기
+      </p>
+      <div class="stats">
+        <div class="stat"><div class="stat-label">타워</div><div class="stat-value">5종</div></div>
+        <div class="stat"><div class="stat-label">웨이브</div><div class="stat-value">20</div></div>
+        <div class="stat"><div class="stat-label">적</div><div class="stat-value">5종</div></div>
+        <div class="stat"><div class="stat-label">테마</div><div class="stat-value">잔디밭</div></div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:80%;background:var(--green)"></div></div>
+      <div class="tech-tags">
+        <span class="tech-tag">Phaser 3</span>
+        <span class="tech-tag">EasyStar.js</span>
+        <span class="tech-tag">Vite</span>
+        <span class="tech-tag">GitHub Pages</span>
+      </div>
+      <div class="links">
+        <a href="https://jyw-sata.github.io/space-sheep-defense/" class="link-btn link-primary">🎮 플레이</a>
+        <a href="https://github.com/jyw-sata/space-sheep-defense" class="link-btn link-secondary">GitHub</a>
+      </div>
+    </div>
+
+    <!-- KIS Trader Platform -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:rgba(167,139,250,0.15)">📈</div>
+        <div>
+          <div class="card-title">KIS Trader Platform</div>
+          <div class="card-subtitle">KIS_Trader_Platform</div>
+        </div>
+        <span class="badge badge-blue">운영 중</span>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">
+        한국투자증권 API 기반 자동매매 + 모니터링
+      </p>
+      <div class="stats">
+        <div class="stat"><div class="stat-label">컨테이너</div><div class="stat-value">24개</div></div>
+        <div class="stat"><div class="stat-label">워커</div><div class="stat-value">10+</div></div>
+        <div class="stat"><div class="stat-label">DB 테이블</div><div class="stat-value">8개</div></div>
+        <div class="stat"><div class="stat-label">배포</div><div class="stat-value">NAS</div></div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:70%;background:var(--purple)"></div></div>
+      <div class="tech-tags">
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">FastAPI</span>
+        <span class="tech-tag">Docker</span>
+        <span class="tech-tag">PostgreSQL</span>
+        <span class="tech-tag">Grafana</span>
+        <span class="tech-tag">Tailscale</span>
+      </div>
+      <div class="links">
+        <a href="https://github.com/jyw-sata/KIS_Trader_Platform" class="link-btn link-secondary">GitHub</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 인프라 상태 -->
+  <div class="section-title">🖥️ 인프라 현황</div>
+  <div class="infra-grid">
+    <div class="infra-item">
+      <div class="infra-status">🟢</div>
+      <div class="infra-name">NAS (satanastwo)</div>
+      <div class="infra-detail">192.168.45.77 | Docker 24개</div>
+    </div>
+    <div class="infra-item">
+      <div class="infra-status">🟢</div>
+      <div class="infra-name">PostgreSQL</div>
+      <div class="infra-detail">포트 5433 | DB 8개</div>
+    </div>
+    <div class="infra-item">
+      <div class="infra-status">🟢</div>
+      <div class="infra-name">Redis</div>
+      <div class="infra-detail">포트 6379 | db0 + db1</div>
+    </div>
+    <div class="infra-item">
+      <div class="infra-status">🟢</div>
+      <div class="infra-name">Tailscale</div>
+      <div class="infra-detail">100.104.231.28</div>
+    </div>
+    <div class="infra-item">
+      <div class="infra-status">🟢</div>
+      <div class="infra-name">Grafana</div>
+      <div class="infra-detail">포트 3000</div>
+    </div>
+    <div class="infra-item">
+      <div class="infra-status">🟡</div>
+      <div class="infra-name">노트북 (Surface Go 2)</div>
+      <div class="infra-detail">Python 미설치 | FFmpeg 미설치</div>
+    </div>
+  </div>
+
+  <!-- 최근 활동 -->
+  <div class="section-title">📅 최근 활동</div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">03-25</div>
+      <div class="timeline-text">⚙️ 배치시스템 중계 모드 테스트 성공 + 날씨/뉴스 Job 개발</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">03-25</div>
+      <div class="timeline-text">🎬 숏폼 무료 업그레이드 (이미지 검색, BGM, 크로스페이드)</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">03-24</div>
+      <div class="timeline-text">🦁 신라이언 러닝 게임 Phaser 리빌드 + 사운드 추가</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">03-24</div>
+      <div class="timeline-text">🎬 숏폼 7단계 전체 개발 완료 + 코드 리뷰</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">03-23</div>
+      <div class="timeline-text">🏰 Space Sheep Defense 게임 개발 + 배포</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">03-22</div>
+      <div class="timeline-text">🖥️ PC 환경 설정 (Node.js, JDK, Git, SSH)</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Last updated: 2026-03-25 | Managed by Claude Code + Telegram</p>
+  <p style="margin-top:4px;">jyw-sata | GitHub | NAS: satanastwo</p>
+</div>
+
+</body>
+</html>
