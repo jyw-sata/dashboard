@@ -184,18 +184,18 @@ body {
           <div class="card-title">AI 숏폼 자동 제작</div>
           <div class="card-subtitle">ai-shortform-creator</div>
         </div>
-        <span class="badge badge-yellow">환경 세팅 중</span>
+        <span class="badge badge-green">V2.0 완성</span>
       </div>
       <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">
-        아이들 캐릭터 기반 세로형 숏폼 영상 자동 생성
+        아이들 캐릭터 기반 세로형 숏폼 영상 자동 생성 — 11개 AI 모듈
       </p>
       <div class="stats">
-        <div class="stat"><div class="stat-label">개발 단계</div><div class="stat-value" style="color:var(--green)">7/7</div></div>
-        <div class="stat"><div class="stat-label">버전</div><div class="stat-value">v0.0.3</div></div>
+        <div class="stat"><div class="stat-label">AI 모듈</div><div class="stat-value" style="color:var(--green)">11개</div></div>
+        <div class="stat"><div class="stat-label">버전</div><div class="stat-value">v2.0.0</div></div>
         <div class="stat"><div class="stat-label">코드 리뷰</div><div class="stat-value" style="color:var(--green)">완료</div></div>
         <div class="stat"><div class="stat-label">문서</div><div class="stat-value">8개</div></div>
       </div>
-      <div class="progress-bar"><div class="progress-fill" style="width:85%;background:var(--pink)"></div></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:95%;background:var(--pink)"></div></div>
       <div class="tech-tags">
         <span class="tech-tag">Python</span>
         <span class="tech-tag">FastAPI</span>
@@ -317,15 +317,15 @@ body {
         <span class="badge badge-green">운영 중</span>
       </div>
       <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">
-        일상 자동화 텔레그램 봇 — 날씨, 교통, 뉴스, 환율, 주유소
+        일상 자동화 텔레그램 봇 — 날씨, 교통, 뉴스, 환율, 주유소, 병원/약국, 대기질
       </p>
       <div class="stats">
-        <div class="stat"><div class="stat-label">모듈</div><div class="stat-value">4개</div></div>
-        <div class="stat"><div class="stat-label">서비스</div><div class="stat-value">7개</div></div>
-        <div class="stat"><div class="stat-label">버전</div><div class="stat-value">v2.0</div></div>
-        <div class="stat"><div class="stat-label">배포</div><div class="stat-value">NAS</div></div>
+        <div class="stat"><div class="stat-label">모듈</div><div class="stat-value">5개</div></div>
+        <div class="stat"><div class="stat-label">서비스</div><div class="stat-value">15+개</div></div>
+        <div class="stat"><div class="stat-label">명령어</div><div class="stat-value">15+개</div></div>
+        <div class="stat"><div class="stat-label">버전</div><div class="stat-value">v0.8+</div></div>
       </div>
-      <div class="progress-bar"><div class="progress-fill" style="width:75%;background:var(--accent)"></div></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:85%;background:var(--accent)"></div></div>
       <div class="tech-tags">
         <span class="tech-tag">Python</span>
         <span class="tech-tag">APScheduler</span>
@@ -382,14 +382,14 @@ body {
     <div class="card" style="border-left:3px solid var(--pink)">
       <div style="font-size:16px;font-weight:700;margin-bottom:12px;">🎬 숏폼 프로젝트 진행 내역</div>
       <div class="timeline">
+        <div class="timeline-item"><div class="timeline-date">03-26</div><div class="timeline-text">V2.0.0: 11개 AI 모듈, 코드리뷰 Critical 5건 수정, 오케스트레이터 V2, 타임아웃/재시도 전 서비스 적용</div></div>
         <div class="timeline-item"><div class="timeline-date">03-25</div><div class="timeline-text">무료 업그레이드: 이미지 검색(Unsplash/Pexels), BGM(5분위기), 크로스페이드 전환</div></div>
         <div class="timeline-item"><div class="timeline-date">03-24</div><div class="timeline-text">7단계 전체 개발 완료 (FastAPI+Celery+FFmpeg+Web UI)</div></div>
         <div class="timeline-item"><div class="timeline-date">03-24</div><div class="timeline-text">코드 리뷰: Critical 6개 버그 수정</div></div>
-        <div class="timeline-item"><div class="timeline-date">03-24</div><div class="timeline-text">NAS DB 초기화 (shortform DB + 테이블 3개)</div></div>
-        <div class="timeline-item"><div class="timeline-date">03-24</div><div class="timeline-text">문서 8개 작성 (PRD, GUIDE, WORKFLOW, INTEGRATION 등)</div></div>
+        <div class="timeline-item"><div class="timeline-date">03-24</div><div class="timeline-text">NAS DB 초기화 + 문서 8개 작성</div></div>
       </div>
       <div style="margin-top:12px;padding:10px;background:rgba(244,114,182,0.08);border-radius:8px;font-size:12px;">
-        <strong>다음 단계:</strong> Python+FFmpeg 설치 → 서버 실행 → 첫 숏폼 생성 테스트
+        <strong>다음 단계:</strong> NAS Python+FFmpeg 설치 → Docker 빌드 → 첫 숏폼 생성 테스트
       </div>
     </div>
 
@@ -440,6 +440,10 @@ body {
   <!-- 최근 활동 -->
   <div class="section-title">📅 최근 활동 요약</div>
   <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">03-26</div>
+      <div class="timeline-text">🤖 생활봇 v0.8+ 대규모 업데이트: 캐시5티어, 기상청/에어코리아/병원/약국/고속도로/주유소설정/뉴스개선 | 🎬 숏폼 V2.0.0 (11개 AI 모듈, 코드리뷰 완료)</div>
+    </div>
     <div class="timeline-item">
       <div class="timeline-date">03-25</div>
       <div class="timeline-text">⚙️ 배치: 중계 모드 테스트 성공 + 날씨/뉴스 Job 개발 | 🎬 숏폼: 무료 업그레이드 3개</div>
