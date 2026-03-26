@@ -306,6 +306,39 @@ body {
       </div>
     </div>
 
+    <!-- 생활봇 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:rgba(56,189,248,0.15)">🤖</div>
+        <div>
+          <div class="card-title">생활봇</div>
+          <div class="card-subtitle">notification-hub</div>
+        </div>
+        <span class="badge badge-green">운영 중</span>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">
+        일상 자동화 텔레그램 봇 — 날씨, 교통, 뉴스, 환율, 주유소
+      </p>
+      <div class="stats">
+        <div class="stat"><div class="stat-label">모듈</div><div class="stat-value">4개</div></div>
+        <div class="stat"><div class="stat-label">서비스</div><div class="stat-value">7개</div></div>
+        <div class="stat"><div class="stat-label">버전</div><div class="stat-value">v2.0</div></div>
+        <div class="stat"><div class="stat-label">배포</div><div class="stat-value">NAS</div></div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:75%;background:var(--accent)"></div></div>
+      <div class="tech-tags">
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">APScheduler</span>
+        <span class="tech-tag">httpx</span>
+        <span class="tech-tag">Redis</span>
+        <span class="tech-tag">Docker</span>
+        <span class="tech-tag">Telegram</span>
+      </div>
+      <div class="links">
+        <a href="https://github.com/jyw-sata/notification-hub" class="link-btn link-secondary">GitHub</a>
+      </div>
+    </div>
+
     <!-- KIS Trader Platform -->
     <div class="card">
       <div class="card-header">
@@ -436,6 +469,7 @@ body {
 <script>
 // GitHub API 자동 조회 — 페이지 열 때마다 최신 정보 가져오기
 const REPOS = [
+  { name: 'notification-hub', cardId: 'card-notification' },
   { name: 'ai-shortform-creator', cardId: 'card-shortform' },
   { name: 'batch-system', cardId: 'card-batch' },
   { name: 'shinlion-runner', cardId: 'card-shinlion' },
